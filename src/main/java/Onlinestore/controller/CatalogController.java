@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.*;
 
 @Controller
@@ -31,10 +33,14 @@ public class CatalogController
     private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
     @GetMapping("/catalog")
-    public String getCatalogPage(Model model)
-    {
-        logger.info("Someone trying to receive catalog page");
-        return catalogService.getCatalogPage(model);
+    public String getCatalogPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            Model model
+    ) {
+        logger.info("Someone trying to receive catalog page: page={}, size={}, sortDir={}", page, size, sortDir);
+        return catalogService.getCatalogPage(page, size, sortDir, model);
     }
     
     @GetMapping("/catalog/{id}")
