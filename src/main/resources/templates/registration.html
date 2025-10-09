@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+        <link href="/css/registration.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        
+        <header>Registration</header>
+
+        <div th:replace="fragments/header :: siteHeader"></div>
+        
+        <div class="main-part">
+            <div class="gray-text-label" th:text="#{registration.enterYourData}"></div>
+            <br>
+            
+            <form th:action="@{/registration}" th:object="${userRegistrationDTO}" method="post">
+                
+                <div class="registration-grid">
+                    
+                    <!-- name -->
+                    <div>
+                        <label for="name" class="gray-text-label" th:text="#{registration.name}"></label>
+                    </div>
+                    <div>
+                        <input id="name" type="text" class="text-field" th:field="*{name}" placeholder="Enter name"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+                    </div>
+                    
+                    <!-- surname -->
+                    <div>
+                        <label for="surname" class="gray-text-label" th:text="#{registration.surname}"></label>
+                    </div>
+                    <div>
+                        <input id="surname" type="text" class="text-field" th:field="*{surname}"
+                               placeholder="Enter surname"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+                    </div>
+                    
+                    <!-- email -->
+                    <div>
+                        <label for="email" class="gray-text-label" th:text="#{registration.email}"></label>
+                    </div>
+                    <div>
+                        <input id="email" type="text" class="text-field" th:field="*{email}" placeholder="Enter email"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+                    </div>
+                    
+                    <!-- password -->
+                    <div>
+                        <label for="password" class="gray-text-label" th:text="#{registration.password}"></label>
+                    </div>
+                    <div>
+                        <input id="password" type="password" class="text-field" th:field="*{password}"
+                               placeholder="Enter password"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+                    </div>
+                    
+                    <!-- repeated password -->
+                    <div>
+                        <label for="repeated-password" class="gray-text-label" th:text="#{registration.repeatedPassword}"></label>
+                    </div>
+                    <div>
+                        <input id="repeated-password" type="password" class="text-field" th:field="*{repeatedPassword}"
+                               placeholder="Repeat password"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('repeatedPassword')}" th:errors="*{repeatedPassword}">Repeated
+                            password error
+                        </div>
+                    </div>
+                    
+                    <!-- telephone number -->
+                    <div>
+                        <label for="telephone-number" class="gray-text-label" th:text="#{registration.telephoneNumber}"></label>
+                    </div>
+                    <div>
+                        <input id="telephone-number" type="text" class="text-field" th:field="*{telephoneNumber}"
+                               placeholder="Enter telephone number"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('telephoneNumber')}" th:errors="*{telephoneNumber}">Telephone number error
+                        </div>
+                    </div>
+                    
+                    <!-- country -->
+                    <div>
+                        <label for="country" class="gray-text-label" th:text="#{registration.country}"></label>
+                    </div>
+                    <div>
+                        <input id="country" type="text" class="text-field" th:field="*{country}"
+                               placeholder="Enter country"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country error</div>
+                    </div>
+                    
+                    <!-- address -->
+                    <div>
+                        <label for="address" class="gray-text-label" th:text="#{registration.address}"></label>
+                    </div>
+                    <div>
+                        <input id="address" type="text" class="text-field" th:field="*{address}"
+                               placeholder="Enter address"/>
+                    </div>
+                    <div>
+                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>
+                    </div>
+                
+                </div>
+                
+                <br>
+                
+                <button type="submit" class="green-button" th:text="#{registration.register}"></button>
+            
+            </form>
+        </div>
+    
+    </body>
+</html>

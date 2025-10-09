@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${item.getName()}">Title</title>
+        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+        <link href="/css/item.css" rel="stylesheet" type="text/css">
+        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+        <div th:replace="fragments/header :: siteHeader"></div>
+
+        <!-- name -->
+        <div th:text="${item.getName()}" class="black-text-label"></div>
+
+        <!-- logo -->
+        <img th:if="${item.getLogoName() != null && !item.getLogoName().equals('')}"
+             th:src="${logoFolder + item.getLogoName()}"
+             width="90px" height="90px" class="object-fit-contain"/>
+        <!-- if logo is not present -->
+        <img th:if="${item.getLogoName() == null || item.getLogoName().equals('')}" src="/images/default-logo-image"
+             width="90px" height="90px" class="object-fit-contain"/>
+        <br>
+
+        <!-- images -->
+        <span th:if="${item.getImageNames() != null}" th:each="image : ${item.getImageNames()}">
+            <img th:src="${imagesFolder + image}" width="250px" height="250px" class="object-fit-contain"/>
+        </span>
+        <br>
+
+        <!-- price -->
+        <div>
+            <span class="black-text-label gray-box" th:text="#{item.price}"></span>
+            <span class="black-text-label gray-box" th:text="${item.getPrice()}"></span>
+        </div>
+        <br>
+
+        <!-- amount -->
+        <div>
+            <span class="black-text-label gray-box" th:text="#{item.amount}"></span>
+            <span class="black-text-label gray-box" th:text="${item.getAmount()}"></span>
+        </div>
+        <br>
+
+        <!-- description -->
+        <p th:if="${item.getDescription() != null && !item.getDescription().equals('')}"
+           th:text="${item.getDescription()}" class="black-text-label gray-box"></p>
+        <br>
+        <br>
+
+        <!-- specs -->
+        <div th:if="${item.getSpecs() != null && item.getSpecs().size() > 0}">
+            <div class="black-text-label gray-box" th:text="#{item.specs}"></div>
+            <table class="specs-table">
+                <tr th:each="spec : ${item.getSpecs()}">
+                    <td th:text="${spec.key}" class="text-field"></td>
+                    <td th:text="${spec.value}" class="text-field"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- buy button if (ROLE == ROLE_USER && amount > 0) -->
+        <form th:action="@{/cart/add-order}" method="post" sec:authorize="hasRole('ROLE_USER')"
+              th:if="${!alreadyOrdered && item.getAmount() > 0}">
+            <input type="hidden" name="item-id" th:value="${item.getId()}">
+            <button type="submit" class="green-button" th:text="#{item.orderButton}"></button>
+        </form>
+
+        <!-- "you already bought it" label if (ROLE == ROLE_USER && user already bought it) -->
+        <div th:if="${alreadyOrdered}" class="red" th:text="#{item.wasAlreadyOrdered}">
+        </div>
+
+        <!-- "out of stock" label if (amount == 0) -->
+        <div th:if="${item.getAmount() == 0}" class="red" th:text="#{item.itemIsOutOfStock}"></div>
+
+    </body>
+</html>

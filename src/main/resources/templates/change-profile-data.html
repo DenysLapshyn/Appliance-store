@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Change profile data</title>
+        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+        <link href="/css/change-profile-data.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        
+        <header>Profile</header>
+
+        <div th:replace="fragments/header :: siteHeader"></div>
+        
+        <div class="main-part">
+            <div class="gray-text-label" th:text="#{change-profile.Prompt}"></div>
+            <br>
+            
+            <form th:action="@{/profile/change-profile-data}" th:object="${getUserDTO}" method="post">
+                
+                <div class="change-profile-data-grid">
+                    
+                    <!-- name -->
+                    <div>
+                        <label for="name" class="gray-text-label" th:text="#{change-profile.name}"></label>
+                    </div>
+                    <div>
+                        <input id="name" type="text" class="text-field" th:field="*{name}" placeholder="Enter name"/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+                    </div>
+                    
+                    <!-- surname -->
+                    <div>
+                        <label for="surname" class="gray-text-label" th:text="#{change-profile.surname}"></label>
+                    </div>
+                    <div>
+                        <input id="surname" type="text" class="text-field" th:field="*{surname}" placeholder="Enter surname"/>
+                        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+                    </div>
+                    
+                    <!-- email -->
+                    <div>
+                        <label for="email" class="gray-text-label" th:text="#{change-profile.email}"></label>
+                    </div>
+                    <div>
+                        <input id="email" type="text" class="text-field" th:field="*{email}" placeholder="Enter email"/>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+                    </div>
+                    
+                    <!-- telephone number -->
+                    <div>
+                        <label for="telephone-number" class="gray-text-label" th:text="#{change-profile.telephoneNumber}"></label>
+                    </div>
+                    <div>
+                        <input id="telephone-number" type="text" class="text-field" th:field="*{telephoneNumber}" placeholder="Enter telephone number"/>
+                        <div th:if="${#fields.hasErrors('telephoneNumber')}" th:errors="*{telephoneNumber}">Telephone number error</div>
+                    </div>
+                    
+                    <!-- country -->
+                    <div>
+                        <label for="country" class="gray-text-label" th:text="#{change-profile.country}"></label>
+                    </div>
+                    <div>
+                        <input id="country" type="text" class="text-field" th:field="*{country}" placeholder="Enter country"/>
+                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country error</div>
+                    </div>
+                    
+                    <!-- address -->
+                    <div>
+                        <label for="address" class="gray-text-label" th:text="#{change-profile.address}"></label>
+                    </div>
+                    <div>
+                        <input id="address" type="text" class="text-field" th:field="*{address}" placeholder="Enter address"/>
+                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>
+                    </div>
+                
+                </div>
+                <br>
+                
+                <button type="submit" class="green-button" th:text="#{change-profile.update}"></button>
+            
+            </form>
+        </div>
+    
+    </body>
+</html>

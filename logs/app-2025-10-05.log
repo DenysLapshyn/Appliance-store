@@ -1,0 +1,43 @@
+2025-10-05 23:20:16 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.0.Final
+2025-10-05 23:20:16 INFO  [restartedMain] Onlinestore.OnlineStore - Starting OnlineStore using Java 23.0.2 on Denyss-Laptop.local with PID 7787 (/Users/denyslapshyn/Google Drive/Programming/Java/Online-store-rest-api/target/classes started by denyslapshyn in /Users/denyslapshyn/Google Drive/Programming/Java/Online-store-rest-api)
+2025-10-05 23:20:16 INFO  [restartedMain] Onlinestore.OnlineStore - No active profile set, falling back to default profiles: default
+2025-10-05 23:20:16 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-05 23:20:16 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-05 23:20:17 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-05 23:20:17 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 23 ms. Found 3 JPA repository interfaces.
+2025-10-05 23:20:17 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-10-05 23:20:17 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-10-05 23:20:17 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-05 23:20:17 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.55]
+2025-10-05 23:20:17 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-05 23:20:17 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 739 ms
+2025-10-05 23:20:17 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-10-05 23:20:17 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-05 23:20:17 INFO  [restartedMain] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:online_store'
+2025-10-05 23:20:17 WARN  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [6F2833A7B0634C34879496471EA35BF0]
+2025-10-05 23:20:17 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-05 23:20:17 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.1.Final
+2025-10-05 23:20:17 INFO  [restartedMain] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-10-05 23:20:17 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2025-10-05 23:20:18 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-10-05 23:20:18 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-05 23:20:18 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-05 23:20:18 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2d035b8e, org.springframework.security.web.context.SecurityContextPersistenceFilter@3d73080b, org.springframework.security.web.header.HeaderWriterFilter@4935eb44, org.springframework.security.web.csrf.CsrfFilter@5ddd5e1f, org.springframework.security.web.authentication.logout.LogoutFilter@5ca8bcae, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@8bd4164, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6e2d1a2d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@b2cee26, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@6846ae28, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@55d74afd, org.springframework.security.web.session.SessionManagementFilter@6ce83073, org.springframework.security.web.access.ExceptionTranslationFilter@7c09a1e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@117042a2]
+2025-10-05 23:20:18 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-10-05 23:20:18 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-10-05 23:20:18 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-10-05 23:20:18 INFO  [restartedMain] Onlinestore.OnlineStore - Started OnlineStore in 2.207 seconds (JVM running for 2.538)
+2025-10-05 23:20:18 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-05 23:20:18 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-05 23:20:18 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-10-05 23:20:19 INFO  [http-nio-8080-exec-1] O.controller.CatalogController - Someone trying to receive catalog page
+2025-10-05 23:20:20 INFO  [http-nio-8080-exec-4] O.controller.AuthController - User trying to log in
+2025-10-05 23:20:25 INFO  [http-nio-8080-exec-9] O.controller.MainController - Sending main page
+2025-10-05 23:20:25 INFO  [http-nio-8080-exec-10] O.controller.MainController - Sending about us page page
+2025-10-05 23:20:26 INFO  [http-nio-8080-exec-2] O.controller.CartController - User trying to get cart page
+2025-10-05 23:20:27 INFO  [http-nio-8080-exec-10] O.controller.CatalogController - Someone trying to receive catalog page
+2025-10-05 23:21:31 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-05 23:21:31 INFO  [SpringApplicationShutdownHook] o.h.t.s.i.SchemaDropperImpl$DelayedDropActionImpl - HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2025-10-05 23:21:31 WARN  [SpringApplicationShutdownHook] o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-200]
+2025-10-05 23:21:31 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-05 23:21:31 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
