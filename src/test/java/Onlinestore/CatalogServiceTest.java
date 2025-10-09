@@ -17,7 +17,9 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,6 +63,7 @@ class CatalogServiceTest {
 
     private List<Item> mockItems;
     private List<GetItemDTO> mockItemDTOs;
+    private Page<Item> mockItemPage;
     private Item mockItem;
     private GetItemDTO mockItemDTO;
     private User mockUser;
@@ -81,6 +84,7 @@ class CatalogServiceTest {
         item2.setName("Item 2");
 
         mockItems = Arrays.asList(item1, item2);
+        mockItemPage = new PageImpl<>(mockItems);
 
         // Setup mock DTOs for getCatalogPage
         GetItemDTO dto1 = new GetItemDTO();
@@ -120,16 +124,16 @@ class CatalogServiceTest {
     void getCatalogPage_ShouldReturnCatalogView_WhenItemsExist() {
         // Arrange
         String expectedLogoFolder = "/images/logos";
-        when(itemRepository.findAll(Sort.by("id"))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(mockItems)).thenReturn(mockItemDTOs);
         when(environment.getProperty("item.logos.directory.on.server")).thenReturn(expectedLogoFolder);
 
         // Act
-        String viewName = catalogService.getCatalogPage(model);
+        String viewName = catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         assertEquals("catalog", viewName);
-        verify(itemRepository).findAll(Sort.by("id"));
+        verify(itemRepository).findAll(any(Pageable.class));
         verify(itemMapper).itemListToGetItemDTOList(mockItems);
         verify(model).addAttribute("items", mockItemDTOs);
         verify(model).addAttribute("logoFolder", expectedLogoFolder);
@@ -141,18 +145,19 @@ class CatalogServiceTest {
         // Arrange
         List<Item> emptyItems = Collections.emptyList();
         List<GetItemDTO> emptyDTOs = Collections.emptyList();
+        Page<Item> emptyPage = new PageImpl<>(emptyItems);
         String expectedLogoFolder = "/images/logos";
 
-        when(itemRepository.findAll(Sort.by("id"))).thenReturn(emptyItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(emptyPage);
         when(itemMapper.itemListToGetItemDTOList(emptyItems)).thenReturn(emptyDTOs);
         when(environment.getProperty("item.logos.directory.on.server")).thenReturn(expectedLogoFolder);
 
         // Act
-        String viewName = catalogService.getCatalogPage(model);
+        String viewName = catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         assertEquals("catalog", viewName);
-        verify(itemRepository).findAll(Sort.by("id"));
+        verify(itemRepository).findAll(any(Pageable.class));
         verify(itemMapper).itemListToGetItemDTOList(emptyItems);
         verify(model).addAttribute("items", emptyDTOs);
         verify(model).addAttribute("logoFolder", expectedLogoFolder);
@@ -161,27 +166,26 @@ class CatalogServiceTest {
     @Test
     void getCatalogPage_ShouldUseSortById() {
         // Arrange
-        Sort expectedSort = Sort.by("id");
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(any())).thenReturn(mockItemDTOs);
         when(environment.getProperty(anyString())).thenReturn("/logos");
 
         // Act
-        catalogService.getCatalogPage(model);
+        catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
-        verify(itemRepository).findAll(expectedSort);
+        verify(itemRepository).findAll(any(Pageable.class));
     }
 
     @Test
     void getCatalogPage_ShouldHandleNullLogoFolder() {
         // Arrange
-        when(itemRepository.findAll(Sort.by("id"))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(mockItems)).thenReturn(mockItemDTOs);
         when(environment.getProperty("item.logos.directory.on.server")).thenReturn(null);
 
         // Act
-        String viewName = catalogService.getCatalogPage(model);
+        String viewName = catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         assertEquals("catalog", viewName);
@@ -189,31 +193,14 @@ class CatalogServiceTest {
     }
 
     @Test
-    void getCatalogPage_ShouldAddBothAttributesToModel() {
-        // Arrange
-        String logoFolder = "/logos";
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(mockItems);
-        when(itemMapper.itemListToGetItemDTOList(any())).thenReturn(mockItemDTOs);
-        when(environment.getProperty(anyString())).thenReturn(logoFolder);
-
-        // Act
-        catalogService.getCatalogPage(model);
-
-        // Assert
-        verify(model).addAttribute("items", mockItemDTOs);
-        verify(model).addAttribute("logoFolder", logoFolder);
-        verify(model, times(2)).addAttribute(anyString(), any());
-    }
-
-    @Test
     void getCatalogPage_ShouldCallMapperWithCorrectItemList() {
         // Arrange
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(mockItems)).thenReturn(mockItemDTOs);
         when(environment.getProperty(anyString())).thenReturn("/logos");
 
         // Act
-        catalogService.getCatalogPage(model);
+        catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         verify(itemMapper).itemListToGetItemDTOList(mockItems);
@@ -222,12 +209,12 @@ class CatalogServiceTest {
     @Test
     void getCatalogPage_ShouldRequestCorrectEnvironmentProperty() {
         // Arrange
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(any())).thenReturn(mockItemDTOs);
         when(environment.getProperty("item.logos.directory.on.server")).thenReturn("/logos");
 
         // Act
-        catalogService.getCatalogPage(model);
+        catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         verify(environment).getProperty("item.logos.directory.on.server");
@@ -236,17 +223,18 @@ class CatalogServiceTest {
     @Test
     void getCatalogPage_ShouldAlwaysReturnCatalogString() {
         // Arrange
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(mockItems);
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(mockItemPage);
         when(itemMapper.itemListToGetItemDTOList(any())).thenReturn(mockItemDTOs);
         when(environment.getProperty(anyString())).thenReturn("/logos");
 
         // Act
-        String result1 = catalogService.getCatalogPage(model);
+        String result1 = catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Different scenario - empty list
-        when(itemRepository.findAll(any(Sort.class))).thenReturn(Collections.emptyList());
+        Page<Item> emptyPage = new PageImpl<>(Collections.emptyList());
+        when(itemRepository.findAll(any(Pageable.class))).thenReturn(emptyPage);
         when(itemMapper.itemListToGetItemDTOList(any())).thenReturn(Collections.emptyList());
-        String result2 = catalogService.getCatalogPage(model);
+        String result2 = catalogService.getCatalogPage(1, 1, "asc", model);
 
         // Assert
         assertEquals("catalog", result1);

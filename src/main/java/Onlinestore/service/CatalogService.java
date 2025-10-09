@@ -30,6 +30,15 @@ public class CatalogService {
     private final ItemMapper itemMapper;
     private final Environment environment;
 
+    public String getCatalogPage(Model model) {
+        List<Item> items = itemRepository.findAll();
+        List<GetItemDTO> getItemDTOS = itemMapper.itemListToGetItemDTOList(items);
+        model.addAttribute("items", getItemDTOS);
+        model.addAttribute("logoFolder", environment.getProperty("item.logos.directory.on.server"));
+
+        return "catalog";
+    }
+
     public String getCatalogPage(int page, int size, String sortDir, Model model) {
         // Ensure page number is not negative
         int currentPage = (page < 1) ? 0 : page - 1;
