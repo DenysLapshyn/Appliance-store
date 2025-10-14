@@ -5,9 +5,9 @@ import Onlinestore.dto.UpdatePasswordDTO;
 import Onlinestore.dto.UserRegistrationDTO;
 import Onlinestore.entity.User;
 import Onlinestore.mapper.UserMapper;
-import Onlinestore.model.RoleNames;
 import Onlinestore.repository.UserRepository;
-import Onlinestore.security.UserPrincipal;
+import Onlinestore.security.RoleNames;
+import Onlinestore.security.UserDetailsImpl;
 import Onlinestore.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class UserServiceTest {
     private Authentication authentication;
 
     @Mock
-    private UserPrincipal userPrincipal;
+    private UserDetailsImpl userDetailsImpl;
 
     @Mock
     private BindingResult bindingResult;
@@ -302,8 +302,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -325,8 +325,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -353,8 +353,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -387,8 +387,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(differentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(differentUser);
             when(userMapper.userToGetUserDTO(differentUser)).thenReturn(differentGetUserDTO);
 
             // Act
@@ -411,8 +411,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -434,8 +434,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -463,8 +463,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -501,8 +501,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(differentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(differentUser);
             when(userMapper.userToGetUserDTO(differentUser)).thenReturn(differentGetUserDTO);
 
             // Act
@@ -524,8 +524,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -535,7 +535,7 @@ class UserServiceTest {
             mockedSecurityContextHolder.verify(SecurityContextHolder::getContext, times(1));
             verify(securityContext, times(1)).getAuthentication();
             verify(authentication, times(1)).getPrincipal();
-            verify(userPrincipal, times(1)).getUser();
+            verify(userDetailsImpl, times(1)).getUser();
         }
     }
 
@@ -548,8 +548,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(user);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(user);
             when(userMapper.userToGetUserDTO(user)).thenReturn(getUserDTO);
 
             // Act
@@ -559,7 +559,7 @@ class UserServiceTest {
             mockedSecurityContextHolder.verify(SecurityContextHolder::getContext, times(1));
             verify(securityContext, times(1)).getAuthentication();
             verify(authentication, times(1)).getPrincipal();
-            verify(userPrincipal, times(1)).getUser();
+            verify(userDetailsImpl, times(1)).getUser();
         }
     }
 
@@ -572,8 +572,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(false);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(false);
@@ -603,8 +603,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(true);
             when(bindingResult.hasErrors()).thenReturn(true);
@@ -635,8 +635,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(true);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(false);
@@ -661,8 +661,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(false);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(true);
@@ -694,8 +694,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(false);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(true);
@@ -720,8 +720,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(true);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(true);
@@ -767,8 +767,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
 
@@ -812,8 +812,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 
@@ -849,8 +849,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 
@@ -861,7 +861,7 @@ class UserServiceTest {
             mockedSecurityContextHolder.verify(SecurityContextHolder::getContext, times(1));
             verify(securityContext, times(1)).getAuthentication();
             verify(authentication, times(1)).getPrincipal();
-            verify(userPrincipal, times(1)).getUser();
+            verify(userDetailsImpl, times(1)).getUser();
         }
     }
 
@@ -877,8 +877,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode("")).thenReturn("encodedEmptyPassword");
 
@@ -906,8 +906,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(userMapper.getUserDTOToUser(getUserDTO2)).thenReturn(mappedUser);
             when(userRepository.existsByEmail(mappedUser.getEmail())).thenReturn(false);
             when(userRepository.existsByTelephoneNumber(mappedUser.getTelephoneNumber())).thenReturn(false);
@@ -1029,8 +1029,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(rawPassword)).thenReturn(encodedPassword);
 
@@ -1061,8 +1061,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(newPassword)).thenReturn(newEncodedPassword);
 
@@ -1166,8 +1166,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 
@@ -1195,8 +1195,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(longPassword)).thenReturn("encodedLongPassword");
 
@@ -1223,8 +1223,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(specialPassword)).thenReturn("encodedSpecialPassword");
 
@@ -1261,8 +1261,8 @@ class UserServiceTest {
             mockedSecurityContextHolder.when(SecurityContextHolder::getContext)
                     .thenReturn(securityContext);
             when(securityContext.getAuthentication()).thenReturn(authentication);
-            when(authentication.getPrincipal()).thenReturn(userPrincipal);
-            when(userPrincipal.getUser()).thenReturn(currentUser);
+            when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+            when(userDetailsImpl.getUser()).thenReturn(currentUser);
             when(bindingResult.hasErrors()).thenReturn(false);
             when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 

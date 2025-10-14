@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Admin</title>
-        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
-        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        
-        <header>Admin</header>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+    <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+</head>
+<body>
 
-        <div th:replace="fragments/header :: siteHeader"></div>
-        
-        <div class="main-part">
-            <a href="/admin/add-item">
-                <button class="gray-button" th:text="#{admin.addItem}"></button>
-            </a><br>
-            <a href="/admin/edit-or-delete-items">
-                <button class="gray-button" th:text="#{admin.editOrDelete}"></button>
-            </a><br>
-        </div>
-    
-    </body>
+<header>Admin</header>
+
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<div class="main-part">
+    <a href="/admin/add-item">
+        <button class="gray-button" th:text="#{admin.addItem}"></button>
+    </a><br>
+    <a href="/admin/edit-or-delete-items">
+        <button class="gray-button" th:text="#{admin.editOrDelete}"></button>
+    </a><br>
+</div>
+
+</body>
 </html>

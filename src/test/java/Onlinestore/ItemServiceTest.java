@@ -3,7 +3,6 @@ package Onlinestore;
 import Onlinestore.dto.NewItemDTO;
 import Onlinestore.dto.UpdateItemDTO;
 import Onlinestore.entity.Item;
-import Onlinestore.entity.User;
 import Onlinestore.mapper.ItemMapper;
 import Onlinestore.repository.ItemRepository;
 import Onlinestore.repository.OrderRepository;
@@ -25,7 +24,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -33,27 +35,20 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ItemServiceTest {
 
-    @Mock
-    private Environment environment;
-
-    @Mock
-    private ItemMapper itemMapper;
-
-    @Mock
-    private ItemRepository itemRepository;
-
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private OrderRepository orderRepository;
-
-    @Mock
-    private MultipartFile logo;
-
     @TempDir
     Path tempDir;
-
+    @Mock
+    private Environment environment;
+    @Mock
+    private ItemMapper itemMapper;
+    @Mock
+    private ItemRepository itemRepository;
+    @Mock
+    private UserRepository userRepository;
+    @Mock
+    private OrderRepository orderRepository;
+    @Mock
+    private MultipartFile logo;
     private ItemService itemService;
 
     @BeforeEach
@@ -419,7 +414,7 @@ class ItemServiceTest {
         String imagesDirectory = tempDir.toString() + File.separator;
 
         MultipartFile image = mock(MultipartFile.class);
-        byte[] specialBytes = new byte[]{0x00, (byte)0xFF, 0x7F, (byte)0x80, 0x01};
+        byte[] specialBytes = new byte[]{0x00, (byte) 0xFF, 0x7F, (byte) 0x80, 0x01};
         when(image.getBytes()).thenReturn(specialBytes);
 
         MultipartFile[] images = {image};

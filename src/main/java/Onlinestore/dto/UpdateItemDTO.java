@@ -1,22 +1,20 @@
 package Onlinestore.dto;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.ElementCollection;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 @AllArgsConstructor
-public class UpdateItemDTO
-{
+public class UpdateItemDTO {
     @Getter
     @Setter
     private Long id;
@@ -56,8 +54,7 @@ public class UpdateItemDTO
     @ElementCollection
     private Map<String, String> specs;
 
-    public UpdateItemDTO()
-    {
+    public UpdateItemDTO() {
         imageNames = new HashSet<>();
         specs = new LinkedHashMap<>();
     }

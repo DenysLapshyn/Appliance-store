@@ -1,19 +1,13 @@
 package Onlinestore.controller;
 
 import Onlinestore.dto.UserRegistrationDTO;
-import Onlinestore.entity.User;
-import Onlinestore.mapper.UserMapper;
-import Onlinestore.model.RoleNames;
-import Onlinestore.repository.UserRepository;
 import Onlinestore.service.UserService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @AllArgsConstructor
 public class AuthController {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
-    private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final UserService userService;
 
     @GetMapping("/login")
     public String getLoginPage() {

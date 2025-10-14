@@ -11,14 +11,14 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
 
-    public abstract Item newItemDTOToItem(NewItemDTO newItemDTO);
+    Item newItemDTOToItem(NewItemDTO newItemDTO);
 
-    public abstract UpdateItemDTO itemToUpdateItemDTO(Item item);
+    UpdateItemDTO itemToUpdateItemDTO(Item item);
 
-    public abstract Item updateItemDTOToItem(UpdateItemDTO updateItemDTO);
+    Item updateItemDTOToItem(UpdateItemDTO updateItemDTO);
 
-    public abstract GetItemDTO itemToGetItemDTO(Item item);
+    GetItemDTO itemToGetItemDTO(Item item);
 
-    public abstract List<GetItemDTO> itemListToGetItemDTOList(List<Item> items);
+    List<GetItemDTO> itemListToGetItemDTOList(List<Item> items);
 
 }

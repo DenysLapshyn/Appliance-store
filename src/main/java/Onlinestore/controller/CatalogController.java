@@ -1,36 +1,20 @@
 package Onlinestore.controller;
 
-import Onlinestore.dto.GetItemDTO;
-import Onlinestore.entity.Item;
-import Onlinestore.entity.Order;
-import Onlinestore.entity.User;
-import Onlinestore.mapper.ItemMapper;
-import Onlinestore.repository.ItemRepository;
-import Onlinestore.security.UserPrincipal;
 import Onlinestore.service.CatalogService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
-
 @Controller
 @AllArgsConstructor
-public class CatalogController
-{
-    private final ItemRepository itemRepository;
-    private final Environment environment;
-    private final ItemMapper itemMapper;
-    private final CatalogService catalogService;
+public class CatalogController {
     private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
+    private final CatalogService catalogService;
 
     @GetMapping("/catalog")
     public String getCatalogPage(
@@ -42,10 +26,9 @@ public class CatalogController
         logger.info("Someone trying to receive catalog page: page={}, size={}, sortDir={}", page, size, sortDir);
         return catalogService.getCatalogPage(page, size, sortDir, model);
     }
-    
+
     @GetMapping("/catalog/{id}")
-    public String getShowItemPage(Model model, @PathVariable("id") int id)
-    {
+    public String getShowItemPage(Model model, @PathVariable("id") int id) {
         logger.info("User trying to receive a page with detailed item information");
         return catalogService.getShowItemPage(model, id);
     }

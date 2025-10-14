@@ -1,14 +1,14 @@
 package Onlinestore;
 
 import Onlinestore.dto.GetOrderDTO;
+import Onlinestore.entity.Item;
 import Onlinestore.entity.Order;
 import Onlinestore.entity.User;
-import Onlinestore.entity.Item;
 import Onlinestore.mapper.OrderMapper;
 import Onlinestore.repository.ItemRepository;
 import Onlinestore.repository.OrderRepository;
 import Onlinestore.repository.UserRepository;
-import Onlinestore.security.UserPrincipal;
+import Onlinestore.security.UserDetailsImpl;
 import Onlinestore.service.CartService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +27,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -59,7 +59,7 @@ class CartServiceTest {
     private Authentication authentication;
 
     @Mock
-    private UserPrincipal userPrincipal;
+    private UserDetailsImpl userDetailsImpl;
 
     @InjectMocks
     private CartService cartService;
@@ -73,12 +73,12 @@ class CartServiceTest {
         // Set up SecurityContext
         SecurityContextHolder.setContext(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(userPrincipal);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
 
         // Set up test user
         testUser = new User();
         testUser.setId(1L);
-        when(userPrincipal.getUser()).thenReturn(testUser);
+        when(userDetailsImpl.getUser()).thenReturn(testUser);
 
         // Set up test orders
         testOrders = new HashSet<>();
@@ -123,7 +123,7 @@ class CartServiceTest {
         // Assert
         verify(securityContext).getAuthentication();
         verify(authentication).getPrincipal();
-        verify(userPrincipal).getUser();
+        verify(userDetailsImpl).getUser();
     }
 
     @Test
@@ -252,7 +252,7 @@ class CartServiceTest {
         // Assert
         verify(securityContext).getAuthentication();
         verify(authentication).getPrincipal();
-        verify(userPrincipal).getUser();
+        verify(userDetailsImpl).getUser();
     }
 
     @Test
@@ -327,7 +327,7 @@ class CartServiceTest {
         testItem.setId(itemId);
 
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(itemRepository.getById(itemId)).thenReturn(testItem);
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -411,7 +411,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 1L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -427,7 +427,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 1L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -437,7 +437,7 @@ class CartServiceTest {
         // Assert
         verify(securityContext).getAuthentication();
         verify(authentication).getPrincipal();
-        verify(userPrincipal).getUser();
+        verify(userDetailsImpl).getUser();
     }
 
     @Test
@@ -445,7 +445,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 5L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -461,7 +461,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 1L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -477,7 +477,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 10L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -493,7 +493,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 1L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -514,7 +514,7 @@ class CartServiceTest {
         long orderId1 = 1L;
         long orderId2 = 2L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(anyLong());
 
@@ -535,7 +535,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 0L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -553,7 +553,7 @@ class CartServiceTest {
         // Arrange
         long orderId = 999999L;
         User spyUser = spy(testUser);
-        when(userPrincipal.getUser()).thenReturn(spyUser);
+        when(userDetailsImpl.getUser()).thenReturn(spyUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         doNothing().when(orderRepository).deleteById(orderId);
 
@@ -650,7 +650,7 @@ class CartServiceTest {
         // Assert
         verify(securityContext).getAuthentication();
         verify(authentication).getPrincipal();
-        verify(userPrincipal).getUser();
+        verify(userDetailsImpl).getUser();
     }
 
     @Test

@@ -9,8 +9,8 @@ import java.util.Set;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
 
-    public abstract GetOrderDTO orderToOrderDTO(Order order);
+    GetOrderDTO orderToOrderDTO(Order order);
 
-    public abstract Set<GetOrderDTO> orderListToOrderDTOSet(Set<Order> orderList);
+    Set<GetOrderDTO> orderListToOrderDTOSet(Set<Order> orderList);
 
 }

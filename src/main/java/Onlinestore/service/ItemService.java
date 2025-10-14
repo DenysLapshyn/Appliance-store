@@ -8,7 +8,7 @@ import Onlinestore.mapper.ItemMapper;
 import Onlinestore.repository.ItemRepository;
 import Onlinestore.repository.OrderRepository;
 import Onlinestore.repository.UserRepository;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -26,76 +26,62 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
-public class ItemService
-{
+public class ItemService {
     private final Environment environment;
     private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
-    public String saveLogoToFolder(long id, MultipartFile logo)
-    {
+    public String saveLogoToFolder(long id, MultipartFile logo) {
         String logoName = "logo" + id;
-        
+
         String logosDirectory = environment.getProperty("item.logos.directory");
         File logoFile = new File(logosDirectory + logoName);
-        try (OutputStream os = new FileOutputStream(logoFile))
-        {
+        try (OutputStream os = new FileOutputStream(logoFile)) {
             os.write(logo.getBytes());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return logoName;
     }
-    
-    public Set<String> saveImagesToFolder(long id, MultipartFile[] images)
-    {
+
+    public Set<String> saveImagesToFolder(long id, MultipartFile[] images) {
         Set<String> imageNames = new HashSet<>();
-        
+
         String imageTemplateName = "image" + id + ".";
         String itemsDirectory = environment.getProperty("item.images.directory");
-        
-        for (int i = 0; i < images.length; i++)
-        {
+
+        for (int i = 0; i < images.length; i++) {
             String localImageName = imageTemplateName + (i + 1);
             String fullImageName = itemsDirectory + localImageName;
             File imageFile = new File(fullImageName);
-            try (OutputStream os = new FileOutputStream(imageFile))
-            {
+            try (OutputStream os = new FileOutputStream(imageFile)) {
                 os.write(images[i].getBytes());
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             imageNames.add(localImageName);
         }
-        
+
         return imageNames;
     }
-    
-    public void deleteLogoFromFolder(long id)
-    {
+
+    public void deleteLogoFromFolder(long id) {
         String logoName = "logo" + id;
         String logosDirectory = environment.getProperty("item.logos.directory");
         File logoFile = new File(logosDirectory + logoName);
         logoFile.delete();
     }
-    
-    public void deleteImagesFromFolder(long id)
-    {
+
+    public void deleteImagesFromFolder(long id) {
         String imagesDirectory = environment.getProperty("item.images.directory");
         File[] files = new File(imagesDirectory).listFiles();
-        
-        for (File file : files)
-        {
-            if (file.getName().startsWith("image" + id))
-            {
+
+        for (File file : files) {
+            if (file.getName().startsWith("image" + id)) {
                 file.delete();
             }
         }
@@ -114,23 +100,19 @@ public class ItemService
                           @RequestParam(value = "images", required = false) MultipartFile[] images,
                           @RequestParam(value = "spec-names", required = false) ArrayList<String> specNames,
                           @RequestParam(value = "spec-values", required = false) ArrayList<String> specValues) {
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             return "add-item";
         }
 
         // ensure that admin uploads no more that item.images.upload.max.amount files
-        if (images.length > Integer.parseInt(environment.getProperty("item.images.upload.max.amount")))
-        {
+        if (images.length > Integer.parseInt(environment.getProperty("item.images.upload.max.amount"))) {
             return "redirect:/admin";
         }
 
         // fill item.specs
-        if (specNames != null && specValues != null)
-        {
+        if (specNames != null && specValues != null) {
             Map<String, String> specs = newItemDTO.getSpecs();
-            for (int i = 0; i < specNames.size(); i++)
-            {
+            for (int i = 0; i < specNames.size(); i++) {
                 specs.put(specNames.get(i), specValues.get(i));
             }
         }
@@ -143,24 +125,18 @@ public class ItemService
         long insertedId = item.getId();
 
         // (write logo image into file system) & (write logo name into item)
-        if (logo != null && !logo.isEmpty())
-        {
+        if (logo != null && !logo.isEmpty()) {
             String logoName = saveLogoToFolder(insertedId, logo);
             item.setLogoName(logoName);
-        }
-        else
-        {
+        } else {
             item.setLogoName(null);
         }
 
         // (write images into file system) & (write image names into item)
-        if (!images[0].isEmpty())
-        {
+        if (!images[0].isEmpty()) {
             Set<String> imageNames = saveImagesToFolder(insertedId, images);
             item.setImageNames(imageNames);
-        }
-        else
-        {
+        } else {
             item.setImageNames(null);
         }
 
@@ -179,7 +155,7 @@ public class ItemService
         return "update-item";
     }
 
-    public String updateItem(@ModelAttribute("item") @Valid UpdateItemDTO updateItemDTO,
+    public String updateItem(@ModelAttribute("updateItemDTO") @Valid UpdateItemDTO updateItemDTO,
                              BindingResult bindingResult,
                              @RequestParam("logo") MultipartFile logo,
                              @RequestParam("images") MultipartFile[] images,
@@ -189,13 +165,11 @@ public class ItemService
                              @RequestParam("spec-values") ArrayList<String> specValues) {
 
         // ensure that admin uploads no more that item.images.upload.max.amount files
-        if (images != null && images.length > Integer.parseInt(environment.getProperty("item.images.upload.max.amount")))
-        {
+        if (images != null && images.length > Integer.parseInt(environment.getProperty("item.images.upload.max.amount"))) {
             return "error";
         }
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             return "update-item";
         }
 
@@ -210,16 +184,13 @@ public class ItemService
         itemRepository.save(item);
 
         // process logo
-        if (deletePreviousLogo)
-        {
+        if (deletePreviousLogo) {
             // delete from the database
             item.setLogoName(null);
 
             // delete from the folder
             deleteLogoFromFolder(item.getId());
-        }
-        else if (!logo.isEmpty())
-        {
+        } else if (!logo.isEmpty()) {
             // delete from the database
             item.setLogoName(null);
 
@@ -233,16 +204,13 @@ public class ItemService
             item.setLogoName(logoName);
         }
 
-        if (deletePreviousImages)
-        {
+        if (deletePreviousImages) {
             // delete from the database
             item.setImageNames(null);
 
             // delete from the folder
             deleteImagesFromFolder(item.getId());
-        }
-        else if (!images[0].isEmpty())
-        {
+        } else if (!images[0].isEmpty()) {
             // delete from the database
             item.setImageNames(null);
 
@@ -258,8 +226,7 @@ public class ItemService
 
         // fill item.specs
         Map<String, String> specs = new LinkedHashMap<>();
-        for (int i = 0; i < specNames.size(); i++)
-        {
+        for (int i = 0; i < specNames.size(); i++) {
             specs.put(specNames.get(i), specValues.get(i));
         }
         item.setSpecs(specs);
@@ -271,8 +238,7 @@ public class ItemService
     public String deleteItem(long itemId) {
         // delete user's orders from database
         List<User> users = userRepository.findAll();
-        for (User user : users)
-        {
+        for (User user : users) {
             user.deleteOrdersByItemId(itemId);
             userRepository.save(user);
         }

@@ -8,7 +8,7 @@ import Onlinestore.mapper.OrderMapper;
 import Onlinestore.repository.ItemRepository;
 import Onlinestore.repository.OrderRepository;
 import Onlinestore.repository.UserRepository;
-import Onlinestore.security.UserPrincipal;
+import Onlinestore.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +28,7 @@ public class CartService {
     private final UserRepository userRepository;
 
     public String getCartPage(Model model) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 
         Set<Order> orders = user.getOrders();
         List<Order> orderList = new ArrayList<>(orders.stream().toList());
@@ -43,7 +43,7 @@ public class CartService {
     }
 
     public String addOrder(long itemId) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         Item item = itemRepository.getById(itemId);
 
         Order order = new Order(item, 1, user.getId());
@@ -55,7 +55,7 @@ public class CartService {
     }
 
     public String deleteOrder(long orderId) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 
         user.deleteOrderById(orderId);
 
@@ -66,16 +66,14 @@ public class CartService {
     }
 
     public String buyOrders(ArrayList<Integer> amountToPurchase) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         Set<Order> orders = user.getOrders();
 
         // check if amount to buy <= stored amount for each order
         Iterator<Order> orderIterator = orders.iterator();
         int currentAmountToPurchaseIndex = 0;
-        while (orderIterator.hasNext())
-        {
-            if (amountToPurchase.get(currentAmountToPurchaseIndex) > orderIterator.next().getItem().getAmount())
-            {
+        while (orderIterator.hasNext()) {
+            if (amountToPurchase.get(currentAmountToPurchaseIndex) > orderIterator.next().getItem().getAmount()) {
                 return "redirect:/error";
             }
             currentAmountToPurchaseIndex++;
@@ -84,8 +82,7 @@ public class CartService {
         // update amount of stored items
         orderIterator = orders.iterator();
         currentAmountToPurchaseIndex = 0;
-        while (orderIterator.hasNext())
-        {
+        while (orderIterator.hasNext()) {
             Item item = orderIterator.next().getItem();
             item.setAmount(item.getAmount() - amountToPurchase.get(currentAmountToPurchaseIndex));
             currentAmountToPurchaseIndex++;

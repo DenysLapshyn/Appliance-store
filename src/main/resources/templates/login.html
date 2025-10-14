@@ -1,60 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
-    <head>
-        <title>Log in</title>
-        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
-        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
-        <link href="/css/login.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        
-        <header>Login</header>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Log in</title>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+    <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
+</head>
+<body>
 
-        <div th:replace="fragments/header :: siteHeader"></div>
-        
-        <form th:action="@{/login}" method="post">
-            <div class="main-part">
-                
-                <!-- error message -->
-                <div th:if="${param.error}">
-                    <span class="bigger red" th:text="#{login.invalidCredentials}"></span>
-                </div>
-                
-                <div class="login-grid">
-                    
-                    <!-- username input label -->
-                    <div>
-                        <label for="username" class="gray-text-label" th:text="#{login.username}"></label>
-                    </div>
-                    
-                    <!-- username input -->
-                    <div>
-                        <input type="text" id="username" name="username" class="text-field" placeholder="enter username">
-                    </div>
-                    
-                    <!-- password input label -->
-                    <div>
-                        <label for="password" class="gray-text-label" th:text="#{login.password}"></label>
-                    </div>
-                    
-                    <!-- password input -->
-                    <div>
-                        <input type="password" id="password" name="password" class="text-field" placeholder="enter password">
-                    </div>
-                    
-                </div>
-                
-                <br>
-                
-                <!-- remember me checkbox -->
-                <input type="checkbox" id="remember-me" name="remember-me" checked>
-                <label for="remember-me" class="gray-text-label" th:text="#{login.rememberMe}"></label>
-                <br>
-                
-                <!-- Login Button -->
-                <button type="submit" class="green-button" th:text="#{login.logIn}"></button>
-            
+<header>Login</header>
+
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<form method="post" th:action="@{/login}">
+    <div class="main-part">
+
+        <!-- error message -->
+        <div th:if="${param.error}">
+            <span class="bigger red" th:text="#{login.invalidCredentials}"></span>
+        </div>
+
+        <div class="login-grid">
+
+            <!-- username input label -->
+            <div>
+                <label class="gray-text-label" for="username" th:text="#{login.username}"></label>
             </div>
-        </form>
-    </body>
+
+            <!-- username input -->
+            <div>
+                <input class="text-field" id="username" name="username" placeholder="enter username" type="text">
+            </div>
+
+            <!-- password input label -->
+            <div>
+                <label class="gray-text-label" for="password" th:text="#{login.password}"></label>
+            </div>
+
+            <!-- password input -->
+            <div>
+                <input class="text-field" id="password" name="password" placeholder="enter password" type="password">
+            </div>
+
+        </div>
+
+        <br>
+
+        <!-- remember me checkbox -->
+        <input checked id="remember-me" name="remember-me" type="checkbox">
+        <label class="gray-text-label" for="remember-me" th:text="#{login.rememberMe}"></label>
+        <br>
+
+        <!-- Login Button -->
+        <button class="green-button" th:text="#{login.logIn}" type="submit"></button>
+
+    </div>
+</form>
+</body>
 </html>

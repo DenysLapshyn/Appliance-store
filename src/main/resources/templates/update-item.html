@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Update item</title>
@@ -19,10 +19,10 @@
 
 <header>Admin</header>
 
-<div th:replace="fragments/header :: siteHeader"></div>
+<div th:replace="~{fragments/header :: siteHeader}"></div>
 
 <div class="main-part">
-    <form th:action="@{/admin/update-item}" method="post" th:object="${updateItemDTO}" enctype="multipart/form-data">
+    <form enctype="multipart/form-data" method="post" th:action="@{/admin/update-item}" th:object="${updateItemDTO}">
 
         <div class="gray-text-label" th:text="#{update-item.updateItem}"></div>
         <br>
@@ -30,95 +30,95 @@
         <div class="update-item-grid">
 
             <!-- id -->
-            <input type="hidden" name="id" th:field="*{id}" th:value="${updateItemDTO.getId()}">
+            <input name="id" th:field="*{id}" th:value="${updateItemDTO.getId()}" type="hidden">
 
             <!-- item name input -->
             <div>
-                <label for="name" class="gray-text-label" th:text="#{update-item.itemName}"></label>
+                <label class="gray-text-label" for="name" th:text="#{update-item.itemName}"></label>
             </div>
             <div>
-                <input name="name" id="name" type="text" class="text-field" placeholder="Enter item name"
-                       th:field="*{name}" th:value="${updateItemDTO.getName()}" required>
-                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="red">Name errors</div>
+                <input class="text-field" id="name" name="name" placeholder="Enter item name" required
+                       th:field="*{name}" th:value="${updateItemDTO.getName()}" type="text">
+                <div class="red" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name errors</div>
             </div>
 
             <!-- price input -->
             <div>
-                <label for="price" class="gray-text-label" th:text="#{update-item.price}"></label>
+                <label class="gray-text-label" for="price" th:text="#{update-item.price}"></label>
             </div>
             <div>
-                <input name="price" id="price" type="text" class="text-field" placeholder="Enter price"
-                       th:field="*{price}" th:value="${updateItemDTO.getPrice()}" required>
-                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="red">Price errors</div>
+                <input class="text-field" id="price" name="price" placeholder="Enter price" required
+                       th:field="*{price}" th:value="${updateItemDTO.getPrice()}" type="text">
+                <div class="red" th:errors="*{price}" th:if="${#fields.hasErrors('price')}">Price errors</div>
             </div>
 
             <!-- amount input -->
             <div>
-                <label for="amount" class="gray-text-label" th:text="#{update-item.amount}"></label>
+                <label class="gray-text-label" for="amount" th:text="#{update-item.amount}"></label>
             </div>
             <div>
-                <input name="amount" id="amount" type="text" class="text-field" placeholder="Enter amount"
-                       th:field="*{amount}" th:value="${updateItemDTO.getAmount()}" required>
-                <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="red">Amount errors</div>
+                <input class="text-field" id="amount" name="amount" placeholder="Enter amount" required
+                       th:field="*{amount}" th:value="${updateItemDTO.getAmount()}" type="text">
+                <div class="red" th:errors="*{amount}" th:if="${#fields.hasErrors('amount')}">Amount errors</div>
             </div>
 
             <!-- description -->
             <div>
-                <label for="description" class="gray-text-label" th:text="#{update-item.description}"></label>
+                <label class="gray-text-label" for="description" th:text="#{update-item.description}"></label>
             </div>
             <div>
-                        <textarea name="description" id="description" rows="8" cols="50" placeholder="Enter description"
-                                  class="text-field" th:field="*{description}"
+                        <textarea class="text-field" cols="50" id="description" name="description" placeholder="Enter description"
+                                  rows="8" th:field="*{description}"
                                   th:text="${updateItemDTO.getDescription()}"></textarea>
-                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="red">Description
+                <div class="red" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description
                     errors
                 </div>
             </div>
 
             <!-- logo -->
             <div>
-                <label for="logo-input" class="gray-text-label" id="logo-label" th:text="#{update-item.chooseALogo}">
+                <label class="gray-text-label" for="logo-input" id="logo-label" th:text="#{update-item.chooseALogo}">
                 </label>
             </div>
             <div>
-                <label for="logo-input" id="logo-input-label" class="image-input-label"
+                <label class="image-input-label" for="logo-input" id="logo-input-label"
                        th:text="#{update-item.chooseAnImageFile}">
                 </label>
             </div>
             <div>
-                <input name="logo" type="file" id="logo-input" class="display-none" accept="image/*"
-                       onchange="ensureLogoIsImage(this)">
+                <input accept="image/*" class="display-none" id="logo-input" name="logo" onchange="ensureLogoIsImage(this)"
+                       type="file">
             </div>
             <!-- delete previous logo checkbox -->
             <div th:if="${updateItemDTO.getLogoName() != null}">
-                <input type="checkbox" name="delete-previous-logo" id="delete-previous-logo"
-                       onchange="concealLogoInput()">
-                <label for="delete-previous-logo" class="gray-text-label"
+                <input id="delete-previous-logo" name="delete-previous-logo" onchange="concealLogoInput()"
+                       type="checkbox">
+                <label class="gray-text-label" for="delete-previous-logo"
                        th:text="#{update-item.deletePreviousLogo}"></label>
             </div>
 
             <!-- images -->
             <div>
-                <label for="images-input" class="gray-text-label" id="images-label"
+                <label class="gray-text-label" for="images-input" id="images-label"
                        th:text="#{update-item.chooseImagesLabel}">
                 </label>
             </div>
             <div>
-                <label for="images-input" id="images-input-label" class="image-input-label"
+                <label class="image-input-label" for="images-input" id="images-input-label"
                        th:text="#{update-item.chooseImagesButton}">
                 </label>
             </div>
             <div>
-                <input name="images" type="file" id="images-input" accept="image/*"
-                       onchange="ensureFilesAreImages(this); limitNumberOfUploadedFiles(this, 10)"
-                       class="display-none" multiple>
+                <input accept="image/*" class="display-none" id="images-input" multiple
+                       name="images"
+                       onchange="ensureFilesAreImages(this); limitNumberOfUploadedFiles(this, 10)" type="file">
             </div>
 
             <!-- delete previous images checkbox -->
             <div th:if="${updateItemDTO.getImageNames() != null && updateItemDTO.getImageNames().size() > 0}">
-                <input type="checkbox" name="delete-previous-images" id="delete-previous-images"
-                       onchange="concealImagesInput()">
-                <label for="delete-previous-images" class="gray-text-label"
+                <input id="delete-previous-images" name="delete-previous-images" onchange="concealImagesInput()"
+                       type="checkbox">
+                <label class="gray-text-label" for="delete-previous-images"
                        th:text="#{update-item.deletePreviousImages}"></label>
             </div>
 
@@ -129,26 +129,26 @@
         <div class="gray-text-label" th:text="#{update-item.specs}"></div>
         <div id="specsForm">
             <div th:each="spec : ${updateItemDTO.getSpecs()}">
-                <input type="text" name="spec-names" class="text-field" th:value="${spec.key}"
-                       placeholder="spec name">
-                <input type="text" name="spec-values" class="text-field" th:value="${spec.value}"
-                       placeholder="spec value">
-                <button type="button" class="big-sign" onclick="deleteRow(this)">-</button>
+                <input class="text-field" name="spec-names" placeholder="spec name" th:value="${spec.key}"
+                       type="text">
+                <input class="text-field" name="spec-values" placeholder="spec value" th:value="${spec.value}"
+                       type="text">
+                <button class="big-sign" onclick="deleteRow(this)" type="button">-</button>
                 <br>
             </div>
             <!-- add button inserts here rows to create specs -->
         </div>
 
         <!-- this button adds a new row -->
-        <button type="button" class="big-sign" onclick="addRow()">+</button>
+        <button class="big-sign" onclick="addRow()" type="button">+</button>
         <br>
 
         <!-- reset button -->
-        <input id="reset" type="reset" class="red-button" value="Reset" onclick="resetAddingForm()">
+        <input class="red-button" id="reset" onclick="resetAddingForm()" type="reset" value="Reset">
         <br>
 
         <!-- send button -->
-        <input id="send" type="submit" class="green-button" value="Send">
+        <input class="green-button" id="send" type="submit" value="Send">
 
     </form>
 </div>

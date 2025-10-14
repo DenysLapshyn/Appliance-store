@@ -1,9 +1,12 @@
 package Onlinestore.exception;
 
-
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.PrintWriter;
+import java.util.Arrays;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,8 +41,9 @@ public class GlobalExceptionHandler {
     // Catch-all fallback (for unexpected errors)
     @ExceptionHandler(Exception.class)
     public ModelAndView handleGlobalException(Exception ex) {
-        ModelAndView mav = new ModelAndView("error/general");
+        ModelAndView mav = new ModelAndView("error");
         mav.addObject("message", "Unexpected error: " + ex.getMessage());
+        ex.printStackTrace(new PrintWriter(System.out)); // prints to System.out
         mav.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         return mav;
     }

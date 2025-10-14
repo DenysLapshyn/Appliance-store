@@ -1,9 +1,8 @@
 package Onlinestore.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class GetItemDTO
-{
+public class GetItemDTO {
     @Getter
     @Setter
     private Long id;
@@ -51,8 +49,7 @@ public class GetItemDTO
     @Setter
     private Map<String, String> specs;
 
-    public GetItemDTO()
-    {
+    public GetItemDTO() {
         imageNames = new HashSet<>();
         specs = new LinkedHashMap<>();
     }

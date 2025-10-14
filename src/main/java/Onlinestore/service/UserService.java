@@ -5,9 +5,9 @@ import Onlinestore.dto.UpdatePasswordDTO;
 import Onlinestore.dto.UserRegistrationDTO;
 import Onlinestore.entity.User;
 import Onlinestore.mapper.UserMapper;
-import Onlinestore.model.RoleNames;
 import Onlinestore.repository.UserRepository;
-import Onlinestore.security.UserPrincipal;
+import Onlinestore.security.RoleNames;
+import Onlinestore.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,24 +15,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 
 @Service
 @AllArgsConstructor
-public class UserService
-{
+public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    
-    public boolean isEmailUnique(User user)
-    {
+
+    public boolean isEmailUnique(User user) {
         return !userRepository.existsByEmail(user.getEmail());
     }
-    
-    public boolean isTelephoneNumberUnique(User user)
-    {
+
+    public boolean isTelephoneNumberUnique(User user) {
         return !userRepository.existsByTelephoneNumber(user.getTelephoneNumber());
     }
 
@@ -40,25 +35,21 @@ public class UserService
         User user = userMapper.userRegistrationDTOToUser(userRegistrationDTO);
 
         // check if email already in use
-        if (userRepository.existsByEmail(user.getEmail()))
-        {
+        if (userRepository.existsByEmail(user.getEmail())) {
             bindingResult.addError(new FieldError("userRegistrationDTO", "email", "email address already in use"));
         }
 
         // check if telephoneNumber already in use
-        if (userRepository.existsByTelephoneNumber(user.getTelephoneNumber()))
-        {
+        if (userRepository.existsByTelephoneNumber(user.getTelephoneNumber())) {
             bindingResult.addError(new FieldError("userRegistrationDTO", "telephoneNumber", "telephone number already in use"));
         }
 
         // check if passwords match
-        if (user.getRepeatedPassword() != null && !user.getPassword().equals(user.getRepeatedPassword()))
-        {
+        if (user.getRepeatedPassword() != null && !user.getPassword().equals(user.getRepeatedPassword())) {
             bindingResult.addError(new FieldError("userRegistrationDTO", "repeatedPassword", "passwords don't match"));
         }
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
 
@@ -70,14 +61,14 @@ public class UserService
     }
 
     public String getProfilePage(Model model) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         GetUserDTO getUserDTO = userMapper.userToGetUserDTO(user);
         model.addAttribute(getUserDTO);
         return "profile";
     }
 
     public String getChangeProfileDataPage(Model model) {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         GetUserDTO getUserDTO = userMapper.userToGetUserDTO(user);
         model.addAttribute(getUserDTO);
 
@@ -85,23 +76,20 @@ public class UserService
     }
 
     public String changeProfileData(GetUserDTO getUserDTO, BindingResult bindingResult) {
-        User currentUser = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User currentUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         User user = userMapper.getUserDTOToUser(getUserDTO);
 
         // check if new email already in use
-        if (userRepository.existsByEmail(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail()))
-        {
+        if (userRepository.existsByEmail(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             bindingResult.addError(new FieldError("user", "email", "email address already in use"));
         }
 
         // check if new telephoneNumber already in use
-        if (userRepository.existsByTelephoneNumber(user.getTelephoneNumber()) && !user.getTelephoneNumber().equals(currentUser.getTelephoneNumber()))
-        {
+        if (userRepository.existsByTelephoneNumber(user.getTelephoneNumber()) && !user.getTelephoneNumber().equals(currentUser.getTelephoneNumber())) {
             bindingResult.addError(new FieldError("user", "telephoneNumber", "telephone number already in use"));
         }
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             return "change-profile-data";
         }
 
@@ -124,18 +112,14 @@ public class UserService
     }
 
     public String changePassword(UpdatePasswordDTO updatePasswordDTO, BindingResult bindingResult) {
-        if (!updatePasswordDTO.getPassword().equals(updatePasswordDTO.getRepeatedPassword()))
-        {
+        if (!updatePasswordDTO.getPassword().equals(updatePasswordDTO.getRepeatedPassword())) {
             bindingResult.addError(new FieldError("updatePasswordDTO", "repeatedPassword", "passwords doesn't match"));
         }
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             return "change-password";
-        }
-        else
-        {
-            User currentUser = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        } else {
+            User currentUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
             currentUser.setPassword(passwordEncoder.encode(updatePasswordDTO.getPassword()));
             userRepository.save(currentUser);
 

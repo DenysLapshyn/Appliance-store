@@ -1,22 +1,20 @@
 package Onlinestore.dto;
 
 import Onlinestore.entity.Order;
-import Onlinestore.model.RoleNames;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.*;
+import Onlinestore.security.RoleNames;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @AllArgsConstructor
-public class GetUserDTO
-{
+public class GetUserDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -66,8 +64,7 @@ public class GetUserDTO
     @Setter
     private RoleNames roleNames;
 
-    public GetUserDTO()
-    {
+    public GetUserDTO() {
         orders = new HashSet<>();
     }
 }

@@ -6,7 +6,7 @@ import Onlinestore.entity.Order;
 import Onlinestore.entity.User;
 import Onlinestore.mapper.ItemMapper;
 import Onlinestore.repository.ItemRepository;
-import Onlinestore.security.UserPrincipal;
+import Onlinestore.security.UserDetailsImpl;
 import Onlinestore.service.CatalogService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +54,7 @@ class CatalogServiceTest {
     private Authentication authentication;
 
     @Mock
-    private UserPrincipal userPrincipal;
+    private UserDetailsImpl userDetailsImpl;
 
     @InjectMocks
     private CatalogService catalogService;
@@ -313,8 +313,8 @@ class CatalogServiceTest {
         when(environment.getProperty(anyString())).thenReturn("/path");
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("user@example.com");
-        when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(userPrincipal.getUser()).thenReturn(mockUser);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+        when(userDetailsImpl.getUser()).thenReturn(mockUser);
 
         // Act
         String viewName = catalogService.getShowItemPage(model, itemId);
@@ -347,8 +347,8 @@ class CatalogServiceTest {
         when(environment.getProperty(anyString())).thenReturn("/path");
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("user@example.com");
-        when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(userPrincipal.getUser()).thenReturn(mockUser);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+        when(userDetailsImpl.getUser()).thenReturn(mockUser);
 
         // Act
         String viewName = catalogService.getShowItemPage(model, itemId);
@@ -373,8 +373,8 @@ class CatalogServiceTest {
         when(environment.getProperty(anyString())).thenReturn("/path");
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("user@example.com");
-        when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(userPrincipal.getUser()).thenReturn(mockUser);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+        when(userDetailsImpl.getUser()).thenReturn(mockUser);
 
         // Act
         String viewName = catalogService.getShowItemPage(model, itemId);
@@ -411,8 +411,8 @@ class CatalogServiceTest {
         when(environment.getProperty(anyString())).thenReturn("/path");
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("user@example.com");
-        when(authentication.getPrincipal()).thenReturn(userPrincipal);
-        when(userPrincipal.getUser()).thenReturn(mockUser);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImpl);
+        when(userDetailsImpl.getUser()).thenReturn(mockUser);
 
         // Act
         String viewName = catalogService.getShowItemPage(model, itemId);

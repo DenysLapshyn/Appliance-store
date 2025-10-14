@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long>
-{
+public interface OrderRepository extends JpaRepository<Order, Long> {
     @Transactional
     void deleteOrdersByItem(Item item);
 }

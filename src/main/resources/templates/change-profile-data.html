@@ -1,87 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Change profile data</title>
-        <link href="/css/navbar.css" rel="stylesheet" type="text/css">
-        <link href="/css/main-part.css" rel="stylesheet" type="text/css">
-        <link href="/css/change-profile-data.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        
-        <header>Profile</header>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change profile data</title>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+    <link href="/css/main-part.css" rel="stylesheet" type="text/css">
+    <link href="/css/change-profile-data.css" rel="stylesheet" type="text/css">
+</head>
+<body>
 
-        <div th:replace="fragments/header :: siteHeader"></div>
-        
-        <div class="main-part">
-            <div class="gray-text-label" th:text="#{change-profile.Prompt}"></div>
-            <br>
-            
-            <form th:action="@{/profile/change-profile-data}" th:object="${getUserDTO}" method="post">
-                
-                <div class="change-profile-data-grid">
-                    
-                    <!-- name -->
-                    <div>
-                        <label for="name" class="gray-text-label" th:text="#{change-profile.name}"></label>
-                    </div>
-                    <div>
-                        <input id="name" type="text" class="text-field" th:field="*{name}" placeholder="Enter name"/>
-                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-                    </div>
-                    
-                    <!-- surname -->
-                    <div>
-                        <label for="surname" class="gray-text-label" th:text="#{change-profile.surname}"></label>
-                    </div>
-                    <div>
-                        <input id="surname" type="text" class="text-field" th:field="*{surname}" placeholder="Enter surname"/>
-                        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
-                    </div>
-                    
-                    <!-- email -->
-                    <div>
-                        <label for="email" class="gray-text-label" th:text="#{change-profile.email}"></label>
-                    </div>
-                    <div>
-                        <input id="email" type="text" class="text-field" th:field="*{email}" placeholder="Enter email"/>
-                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
-                    </div>
-                    
-                    <!-- telephone number -->
-                    <div>
-                        <label for="telephone-number" class="gray-text-label" th:text="#{change-profile.telephoneNumber}"></label>
-                    </div>
-                    <div>
-                        <input id="telephone-number" type="text" class="text-field" th:field="*{telephoneNumber}" placeholder="Enter telephone number"/>
-                        <div th:if="${#fields.hasErrors('telephoneNumber')}" th:errors="*{telephoneNumber}">Telephone number error</div>
-                    </div>
-                    
-                    <!-- country -->
-                    <div>
-                        <label for="country" class="gray-text-label" th:text="#{change-profile.country}"></label>
-                    </div>
-                    <div>
-                        <input id="country" type="text" class="text-field" th:field="*{country}" placeholder="Enter country"/>
-                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country error</div>
-                    </div>
-                    
-                    <!-- address -->
-                    <div>
-                        <label for="address" class="gray-text-label" th:text="#{change-profile.address}"></label>
-                    </div>
-                    <div>
-                        <input id="address" type="text" class="text-field" th:field="*{address}" placeholder="Enter address"/>
-                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>
-                    </div>
-                
+<header>Profile</header>
+
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<div class="main-part">
+    <div class="gray-text-label" th:text="#{change-profile.Prompt}"></div>
+    <br>
+
+    <form method="post" th:action="@{/profile/change-profile-data}" th:object="${getUserDTO}">
+
+        <div class="change-profile-data-grid">
+
+            <!-- name -->
+            <div>
+                <label class="gray-text-label" for="name" th:text="#{change-profile.name}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="name" placeholder="Enter name" th:field="*{name}" type="text"/>
+                <div th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name error</div>
+            </div>
+
+            <!-- surname -->
+            <div>
+                <label class="gray-text-label" for="surname" th:text="#{change-profile.surname}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="surname" placeholder="Enter surname" th:field="*{surname}" type="text"/>
+                <div th:errors="*{surname}" th:if="${#fields.hasErrors('surname')}">Surname error</div>
+            </div>
+
+            <!-- email -->
+            <div>
+                <label class="gray-text-label" for="email" th:text="#{change-profile.email}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="email" placeholder="Enter email" th:field="*{email}" type="text"/>
+                <div th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Email error</div>
+            </div>
+
+            <!-- telephone number -->
+            <div>
+                <label class="gray-text-label" for="telephone-number"
+                       th:text="#{change-profile.telephoneNumber}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="telephone-number" placeholder="Enter telephone number" th:field="*{telephoneNumber}"
+                       type="text"/>
+                <div th:errors="*{telephoneNumber}" th:if="${#fields.hasErrors('telephoneNumber')}">Telephone number
+                    error
                 </div>
-                <br>
-                
-                <button type="submit" class="green-button" th:text="#{change-profile.update}"></button>
-            
-            </form>
+            </div>
+
+            <!-- country -->
+            <div>
+                <label class="gray-text-label" for="country" th:text="#{change-profile.country}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="country" placeholder="Enter country" th:field="*{country}" type="text"/>
+                <div th:errors="*{country}" th:if="${#fields.hasErrors('country')}">Country error</div>
+            </div>
+
+            <!-- address -->
+            <div>
+                <label class="gray-text-label" for="address" th:text="#{change-profile.address}"></label>
+            </div>
+            <div>
+                <input class="text-field" id="address" placeholder="Enter address" th:field="*{address}" type="text"/>
+                <div th:errors="*{address}" th:if="${#fields.hasErrors('address')}">Address error</div>
+            </div>
+
         </div>
-    
-    </body>
+        <br>
+
+        <button class="green-button" th:text="#{change-profile.update}" type="submit"></button>
+
+    </form>
+</div>
+
+</body>
 </html>

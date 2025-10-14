@@ -33,11 +33,11 @@
 
     <!-- Root logger: logs everything at INFO and above -->
     <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="ROLLING_FILE" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING_FILE"/>
     </root>
 
     <!-- Example package-specific log level -->
-    <logger name="com.example" level="DEBUG" />
+    <logger name="com.example" level="DEBUG"/>
 
 </configuration>

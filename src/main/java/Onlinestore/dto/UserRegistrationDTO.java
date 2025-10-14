@@ -1,18 +1,18 @@
 package Onlinestore.dto;
 
 import Onlinestore.entity.Order;
-import Onlinestore.model.RoleNames;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.*;
+import Onlinestore.security.RoleNames;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.*;
+
+import java.util.Set;
 
 @AllArgsConstructor
-public class UserRegistrationDTO
-{
+public class UserRegistrationDTO {
     @Getter
     @Setter
     @NotBlank(message = "should not be blank")
@@ -64,13 +64,11 @@ public class UserRegistrationDTO
     @Enumerated(EnumType.STRING)
     private RoleNames roleNames;
 
-    public UserRegistrationDTO()
-    {
+    public UserRegistrationDTO() {
         repeatedPassword = "";
     }
 
-    public UserRegistrationDTO(String name, String surname, String email, String password, String repeatedPassword, String telephoneNumber, String country, String address, Set<Order> orders, RoleNames roleNames)
-    {
+    public UserRegistrationDTO(String name, String surname, String email, String password, String repeatedPassword, String telephoneNumber, String country, String address, Set<Order> orders, RoleNames roleNames) {
         this.name = name;
         this.surname = surname;
         this.email = email;

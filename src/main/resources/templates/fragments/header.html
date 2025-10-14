@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/css/navbar.css" rel="stylesheet" type="text/css">
+    <title>Header Fragment</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css">
 </head>
 <body>
 
+<!-- Header Fragment -->
 <div th:fragment="siteHeader">
 
-    <script>
+    <script th:inline="javascript">
         function changeLang(lang) {
             const url = new URL(window.location);
             url.searchParams.set('lang', lang);
@@ -17,36 +20,54 @@
         }
     </script>
 
-    <form method="post" th:action="@{/logout}" id="logout-form">
+    <!-- Hidden logout form -->
+    <form id="logout-form" method="post" th:action="@{/logout}">
     </form>
+
     <nav>
-        <ul style="display: flex;">
-            <li><a href="/about" class="headerLink" th:text="#{about}"></a></li>
-            <li sec:authorize="isAuthenticated()"><a href="/profile" class="headerLink" th:text="#{profile}"></a></li>
-            <li sec:authorize="hasRole('ROLE_USER')"><a href="/cart" class="headerLink" th:text="#{cart}"></a></li>
-            <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/admin" class="headerLink" th:text="#{admin}"></a></li>
-            <li><a href="/catalog" class="headerLink" th:text="#{catalog}"></a></li>
+        <ul style="display: flex; list-style: none; gap: 1rem; padding: 0;">
+            <li><a class="headerLink" th:href="@{/about}" th:text="#{about}"></a></li>
+
+            <!-- Authenticated user -->
             <li sec:authorize="isAuthenticated()">
-                <a class="headerLink">
-                    <button type="submit" form="logout-form" class="gray" th:text="#{logout}"></button>
-                </a>
+                <a class="headerLink" th:href="@{/profile}" th:text="#{profile}"></a>
             </li>
-            <li sec:authorize="isAnonymous()"><a th:href="@{~/login}" class="headerLink" th:text="#{login}"></a></li>
-            <li sec:authorize="isAnonymous()"><a th:href="@{~/registration}" class="headerLink"
-                                                 th:text="#{register}"></a></li>
+
+            <!-- ROLE_USER -->
+            <li sec:authorize="hasRole('USER')">
+                <a class="headerLink" th:href="@{/cart}" th:text="#{cart}"></a>
+            </li>
+
+            <!-- ROLE_ADMIN -->
+            <li sec:authorize="hasRole('ADMIN')">
+                <a class="headerLink" th:href="@{/admin}" th:text="#{admin}"></a>
+            </li>
+
+            <li><a class="headerLink" th:href="@{/catalog}" th:text="#{catalog}"></a></li>
+
+            <!-- Logout button for authenticated users -->
+            <li sec:authorize="isAuthenticated()">
+                <button class="gray headerLink" form="logout-form" th:text="#{logout}" type="submit"></button>
+            </li>
+
+            <!-- Login / Registration for anonymous users -->
+            <li sec:authorize="isAnonymous()">
+                <a class="headerLink" th:href="@{/login}" th:text="#{login}"></a>
+            </li>
+            <li sec:authorize="isAnonymous()">
+                <a class="headerLink" th:href="@{/registration}" th:text="#{register}"></a>
+            </li>
 
             <!-- Spacer -->
             <li style="flex-grow: 1;"></li>
 
-            <li>
-                <a class="headerLink" href="#" onclick="changeLang('en'); return false;">English</a>
-            </li>
-            <li class="nav-item">
-                <a class="headerLink" href="#" onclick="changeLang('uk'); return false;">Українська</a>
-            </li>
+            <!-- Language switch -->
+            <li><a class="headerLink" href="#" th:onclick="'changeLang(\'en\'); return false;'">English</a></li>
+            <li><a class="headerLink" href="#" th:onclick="'changeLang(\'uk\'); return false;'">Українська</a></li>
         </ul>
     </nav>
     <br>
 </div>
+
 </body>
 </html>

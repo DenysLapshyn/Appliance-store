@@ -8,8 +8,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetOrderDTO
-{
+public class GetOrderDTO {
 
     @Getter
     @Setter
